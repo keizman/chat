@@ -670,6 +670,14 @@ func (messagesMapper) Save(msg *types.Message, attachmentURLs []string, readBySe
 		return err, false
 	}
 
+	// Sync work messages to Excel
+	if topicTags, tagErr := getTopicTags(msg.Topic); tagErr == nil {
+		if syncErr := syncWorkMessage(msg, topicTags); syncErr != nil {
+			// Log error but don't fail the message save
+			logs.Warn.Printf("topic[%s]: failed to sync work message to Excel - err: %+v", msg.Topic, syncErr)
+		}
+	}
+
 	markedReadBySender := false
 	// Mark message as read by the sender.
 	if readBySender {

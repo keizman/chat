@@ -1,3 +1,5 @@
 tinode.conf
 server/static
 server/running.log
+server/work/
+running.log

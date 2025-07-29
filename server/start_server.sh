@@ -1,2 +1,2 @@
 pkill -f tinode
-nohup ./tinode > running.log &
+nohup ./tinode-postgres > running.log &
